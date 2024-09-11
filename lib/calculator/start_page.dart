@@ -1,4 +1,5 @@
 
+import 'package:calculator/calculator/start_button_list.dart';
 import 'package:flutter/material.dart';
 
 class StartPage extends StatelessWidget{
@@ -15,7 +16,7 @@ class StartPage extends StatelessWidget{
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5)),
         ),
-        body: Container(color: Colors.indigo[300]),
+        body: Container(color: Colors.indigo[300], child: const StartButtonList()),
       );
     }
   }
