@@ -19,6 +19,7 @@ class StartButton extends StatelessWidget{
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),)),
           child: Text(title,
+            style: TextStyle(color: Colors.white),
       )),
     );
   }
