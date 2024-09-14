@@ -27,7 +27,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
                 ),
                 keyboardType: TextInputType.number,
                 onChanged: (value){
-                print('$value');
     }),
             )
           ],
