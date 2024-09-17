@@ -1,3 +1,4 @@
+import 'package:calculator/CalculatorApp/CalculatorApp.dart';
 import 'package:flutter/material.dart';
 
 import 'calculator/start_page.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: const StartPage(),
+      home: const CalculatorView(),
     );
   }
 }
