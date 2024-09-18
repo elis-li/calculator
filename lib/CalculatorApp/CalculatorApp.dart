@@ -102,11 +102,17 @@ class _CalculatorViewState extends State<CalculatorView> {
                 calcButton('7', Colors.white24, () => buttonPressed ('7')),
                 calcButton('8', Colors.white24, () => buttonPressed ('8')),
                 calcButton('9', Colors.white24, () => buttonPressed ('9')),
-
+                calcButton('-', Colors.white10, () => buttonPressed ('-')),
               ],
-
-
-
-            )
-      ],
-    );
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                calcButton('4', Colors.white24, () => buttonPressed ('4')),
+                calcButton('5', Colors.white24, () => buttonPressed ('5')),
+                calcButton('6', Colors.white24, () => buttonPressed ('6')),
+                calcButton('+', Colors.white10, () => buttonPressed ('+')),
+              ],
+            ),
+            SizedBox(height: 10),
