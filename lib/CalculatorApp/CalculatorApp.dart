@@ -1,6 +1,7 @@
 
-import 'package:calculator/CalculatorApp/calcButton.dart';
 import 'package:flutter/material.dart';
+
+import 'calcButton.dart';
 
 class CalculatorView extends StatefulWidget{
   const CalculatorView({super.key});
@@ -8,17 +9,25 @@ class CalculatorView extends StatefulWidget{
   @override
   State<CalculatorView> createState() => _CalculatorViewState();
 }
-String equation = "0";
+
+class _CalculatorViewState extends State<CalculatorView> {
+  String equation = "0";
   String result = "0";
   String expression = "0";
   double equationFontSize = 38.0;
   double resultFontSize = 48.0;
 
-  buttonPressed(String buttonText){
-
-  }
-
-class _CalculatorViewState extends State<CalculatorView> {
+buttonPressed(String buttonText){
+  setState((){
+    if (buttonText == '⌫') {
+      if (equation.isNotEmpty) {
+        equation = equation.substring(0, equation.length - 1);
+      }
+    } else {
+      equation += buttonText;
+    }
+  });
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +45,7 @@ class _CalculatorViewState extends State<CalculatorView> {
           title: const Text ('Calculator'),
         centerTitle: true,
       ),
-    body: const SafeArea(
+    body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -76,7 +85,7 @@ class _CalculatorViewState extends State<CalculatorView> {
                       icon: Icon(Icons.backspace_outlined,
                       color: Colors.black87, size: 30),
                       onPressed: () {
-                        buttonPressed("⌫");
+                       buttonPressed('⌫');
                       },
                     ),
                     SizedBox(width: 20),
@@ -116,3 +125,27 @@ class _CalculatorViewState extends State<CalculatorView> {
               ],
             ),
             SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        calcButton(
+                            '1', Colors.white24, () => buttonPressed('1')),
+                        SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.04),
+                        calcButton(
+                            '2', Colors.white24, () => buttonPressed('2')),
+                        SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.04),
+                        calcButton(
+                          '3', Colors.white24, () => buttonPressed('3')),
+                      ],
+                    );
+
+
+
+
+
