@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 import 'calcButton.dart';
 
@@ -16,14 +17,65 @@ class _CalculatorViewState extends State<CalculatorView> {
   double equationFontSize = 38.0;
   double resultFontSize = 48.0;
 
+  // Helper function to remove decimal if not needed
+  String doesContainDecimal(dynamic result) {
+    if (result.toString().contains('.')) {
+      List<String> splitDecimal = result.toString().split('.');
+      if (!(int.parse(splitDecimal[1]) > 0)) {
+        return splitDecimal[0];
+      }
+    }
+    return result;
+  }
+
   buttonPressed(String buttonText) {
     setState(() {
-      if (buttonText == '⌫') {
+      if (buttonText == 'AC') {
+        equation = '0';
+        result = '0';
+      } else if (buttonText == '⌫') {
         if (equation.isNotEmpty) {
           equation = equation.substring(0, equation.length - 1);
+          if (equation == '') {
+            equation = '0';
+          }
+        }
+      } else if (buttonText == '+/-') {
+        if (equation[0] != '-') {
+          equation = '-$equation';
+        } else {
+          equation = equation.substring(1);
+        }
+      } else if (buttonText == '=') {
+        expression = equation;
+        expression = expression.replaceAll('×', '*');
+        expression = expression.replaceAll('÷', '/');
+
+        try {
+          Parser p = Parser();
+          Expression exp = p.parse(expression);
+
+          ContextModel cm = ContextModel();
+          result = '${exp.evaluate(EvaluationType.REAL, cm)}';
+          result = doesContainDecimal(result);
+        } catch (e) {
+          result = 'Error';
+        }
+      } else if (buttonText == '%') {
+        // Handle percentage calculation
+        expression = equation;
+        try {
+          double percentage = double.parse(expression) / 100;
+          result = doesContainDecimal(percentage);
+        } catch (e) {
+          result = 'Error';
         }
       } else {
-        equation += buttonText;
+        if (equation == '0') {
+          equation = buttonText;
+        } else {
+          equation += buttonText;
+        }
       }
     });
   }
@@ -56,32 +108,33 @@ class _CalculatorViewState extends State<CalculatorView> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       Padding(
-                          padding: EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Text(result,
                               textAlign: TextAlign.left,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.white, fontSize: 80))),
-                      Icon(Icons.more_vert, color: Colors.black87, size: 30),
-                      SizedBox(width: 20),
+                      const Icon(Icons.more_vert,
+                          color: Colors.black87, size: 30),
+                      const SizedBox(width: 20),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Padding(
-                        padding: EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(20),
                         child: Text(equation,
-                            style:
-                                TextStyle(fontSize: 40, color: Colors.black87)),
+                            style: const TextStyle(
+                                fontSize: 40, color: Colors.black87)),
                       ),
                       IconButton(
-                        icon: Icon(Icons.backspace_outlined,
+                        icon: const Icon(Icons.backspace_outlined,
                             color: Colors.black87, size: 30),
                         onPressed: () {
                           buttonPressed('⌫');
                         },
                       ),
-                      SizedBox(width: 20),
+                      const SizedBox(width: 20),
                     ],
                   )
                 ],
@@ -97,7 +150,7 @@ class _CalculatorViewState extends State<CalculatorView> {
               calcButton('×', Colors.white10, () => buttonPressed('×')),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -107,7 +160,7 @@ class _CalculatorViewState extends State<CalculatorView> {
               calcButton('-', Colors.white10, () => buttonPressed('-')),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -117,7 +170,7 @@ class _CalculatorViewState extends State<CalculatorView> {
               calcButton('+', Colors.white10, () => buttonPressed('+')),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -132,7 +185,7 @@ class _CalculatorViewState extends State<CalculatorView> {
                       calcButton('3', Colors.white24, () => buttonPressed('3')),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

@@ -13,7 +13,7 @@ Widget calcButton(
           borderRadius: BorderRadius.all(Radius.circular(20))),
         backgroundColor: buttonColor),
       child: Text(buttonText,
-        style: const TextStyle(fontSize: 21, color: Colors.white),
+        style: const TextStyle(fontSize: 20, color: Colors.white),
       ),
     ),
   );
