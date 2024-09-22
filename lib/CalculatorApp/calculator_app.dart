@@ -17,7 +17,7 @@ class _CalculatorViewState extends State<CalculatorView> {
   double equationFontSize = 38.0;
   double resultFontSize = 48.0;
 
-  // Helper function to remove decimal if not needed
+
   String doesContainDecimal(dynamic result) {
     if (result.toString().contains('.')) {
       List<String> splitDecimal = result.toString().split('.');
@@ -62,7 +62,7 @@ class _CalculatorViewState extends State<CalculatorView> {
           result = 'Error';
         }
       } else if (buttonText == '%') {
-        // Handle percentage calculation
+
         expression = equation;
         try {
           double percentage = double.parse(expression) / 100;
@@ -110,6 +110,7 @@ class _CalculatorViewState extends State<CalculatorView> {
                       Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Text(result,
+                              maxLines: 3,
                               textAlign: TextAlign.left,
                               style: const TextStyle(
                                   color: Colors.white, fontSize: 80))),
